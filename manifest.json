@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "Custom youtube button placement and appearance extension",
+    "description": "Place youtube buttons anywhere within video stream.",
+    "version": "1.0",
+    "permissions": ["activeTab", "storage"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.youtube.com/watch*"],
+            "js": ["contentScript.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/icons.json"],
+            "matches": ["https://*.youtube.com/*"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": "assets/logo2.png"
+    },
+    "icons": {
+        "16": "assets/logo2.png",
+        "48": "assets/logo_under_1mb.jpg",
+        "128": "assets/logo2.png"
+    },
+    "content_security_policy": {
+        "script-src": "'self' https://cdn.jsdelivr.net",
+        "object-src": "'self'"
+    }
+}

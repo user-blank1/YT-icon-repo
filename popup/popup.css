@@ -1,0 +1,62 @@
+body {
+    width: 400px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+#popup-title {
+    text-align: center;
+}
+
+#search-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#search {
+    padding: 3px;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#search-button:hover {
+    cursor: pointer;
+}
+#search-button:active {
+    background-color: rgb(189, 189, 189);
+}
+#results {
+    border: 1px solid black;
+    padding-top: 10px !important;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+#results:hover {
+    cursor: pointer;
+}
+.icon-box {
+    width: 30%;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+}
+.icon-box i {
+    width: auto; /* You can adjust this value to control the icon size */
+    height: 100%;
+    font-size: 210%; /* Adjust the font size to make the icon bigger */
+}
+
+.icon-box i {
+    position: relative;
+    bottom: 5px;
+}
+#custom-image-upload {
+    width: 100%; /* Or a fixed width like 250px */
+    max-width: 220px; /* Optional limit */
+    box-sizing: border-box;
+}
