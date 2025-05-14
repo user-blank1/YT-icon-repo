@@ -21,6 +21,59 @@
         <div class="d-flex flex-column justify-content-center align-items-center">
             <p class="text-center mt-2 mb-1">Or upload your own image:</p>
             <input class="border mb-3 mt-0" type="file" id="custom-image-upload" accept="image/*" />
+            <button id="custom-image-upload-button">Choose custom picture</button>
+        </div>
+        <div class="d-flex justify-content-center align-items-center gap-3 mt-2">
+            <button id="clearBtn">Clear</button>
+            <button id="saveBtn">Apply</button>
+        </div>
+        <div id="custom-image-preview" class="d-flex flex-row flex-wrap justify-content-center my-2 gap-3">
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="play">
+                <i class="bi bi-play-fill me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="skip">
+                <i class="bi bi-skip-end-fill me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="volume">
+                <i class="bi bi-volume-up me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center position-relative" name="autoplay">
+                <i class="bi bi-skip-end-btn-fill me-2"></i>
+                <p class="position-absolute" id="autoplay">(autoplay)</p>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="cc">
+                <i class="bi bi-badge-cc me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="settings">
+                <i class="bi bi-gear me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="pip">
+                <i class="bi bi-pip me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="theater">
+                <i class="bi bi-square me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
+            <div class="pairing-up d-flex flex-row justify-content-center align-items-center" name="fullscreen">
+                <i class="bi bi-fullscreen me-2"></i>
+                <p class="p-0 m-0 me-2 becomes">becomes</p>
+                <div class="what-it-becomes"></div>
+            </div>
         </div>
         <div id="results"></div>
 

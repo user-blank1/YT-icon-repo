@@ -50,7 +50,34 @@ body {
     height: 100%;
     font-size: 210%; /* Adjust the font size to make the icon bigger */
 }
+#autoplay {
+    top: 3px;
+    font-size: 0.6rem;
+}
 
+.pairing-up {
+    width: 42%;
+    border: 1px solid black;
+}
+.add-border {
+    border: 3px solid rgb(55, 0, 255) !important;
+}
+.pairing-up:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px;
+}
+
+.initial-icon {
+    font-size: 210%;
+}
+#clearBtn:hover,
+#saveBtn:hover {
+    background-color: rgb(211, 211, 211);
+}
+#clearBtn:active,
+#saveBtn:active {
+    background-color: rgb(175, 175, 175);
+}
 .icon-box i {
     position: relative;
     bottom: 5px;
@@ -59,4 +86,26 @@ body {
     width: 100%; /* Or a fixed width like 250px */
     max-width: 220px; /* Optional limit */
     box-sizing: border-box;
+}
+#custom-image-preview i {
+    width: auto; /* You can adjust this value to control the icon size */
+    height: 100%;
+    font-size: 210%;
+}
+.becomes {
+    width: fit-content;
+}
+#custom-image-upload-button {
+    display: none;
+}
+#custom-image-upload-button:hover {
+    background-color: rgb(211, 211, 211);
+}
+#custom-image-upload-button:active {
+    background-color: rgb(175, 175, 175);
+}
+#custom-image-preview-2 {
+    height: 27px;
+    width: 27px;
+    object-fit: cover;
 }
