@@ -139,6 +139,11 @@ document.getElementById("clearBtn").addEventListener("click", () => {
     });
     chrome.storage.local.remove("chosenIcons", () => {
         console.log("chosenIcons removed");
+
+        // Send message to content script
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "clearIcons" });
+        });
     });
 });
 
