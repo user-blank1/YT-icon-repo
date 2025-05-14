@@ -1,6 +1,27 @@
 let icons = {};
 
 let chosenIcons = [];
+
+chrome.storage.local.get("chosenIcons", (result) => {
+    if (Array.isArray(result.chosenIcons)) {
+        chosenIcons = result.chosenIcons;
+
+        // Optional: restore the icons visually on load
+        chosenIcons.forEach((icon) => {
+            const target = document.querySelector(`[name="${icon.name[0]}"]`);
+            if (target) {
+                if (icon.content === "NotAnIMG") {
+                    target.querySelector(".what-it-becomes").innerHTML = `<i class="bi bi-${icon.data}" title="${icon.data}"></i>`;
+                } else {
+                    target.querySelector(".what-it-becomes").innerHTML = `<img id="custom-image-preview-2" src="${icon.data}" alt="${icon.data}">`;
+                }
+                target.classList.add("add-border");
+            }
+        });
+    } else {
+        console.log("No chosenIcons found or invalid format in storage");
+    }
+});
 // Load the simplified icon map
 fetch(chrome.runtime.getURL("../assets/bootstrap-icons.json"))
     .then((res) => res.json())
@@ -40,12 +61,12 @@ function iconChoices(div) {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64Data = reader.result; // base64 encoded image
-                chosenIcons.push({ data: base64Data, name: "uploadedImage" });
+                chosenIcons.push({ data: base64Data, name: [div.getAttribute("name")], content: "IMAGE" });
             };
             reader.readAsDataURL(file);
         } else if (chosenIcon) {
             div.querySelector(".what-it-becomes").innerHTML = `<i class="bi bi-${chosenIcon}" title="${chosenIcon}"></i>`;
-            chosenIcons.push({ data: chosenIcon, name: [div.getAttribute("name")] });
+            chosenIcons.push({ data: chosenIcon, name: [div.getAttribute("name")], content: "ICON" });
         }
         div.style.backgroundColor = "";
         flag = false;
@@ -109,6 +130,7 @@ function displayIcons(iconNames) {
 
 document.getElementById("clearBtn").addEventListener("click", () => {
     chosenIcons = [];
+
     Array.from(document.querySelectorAll(".pairing-up")).forEach((div) => {
         div.classList.remove("add-border");
     });
@@ -123,16 +145,15 @@ document.getElementById("clearBtn").addEventListener("click", () => {
 chrome.storage.local.get("chosenIcons", (result) => {
     // Check if there are any stored values for "chosenIcons"
     if (result.chosenIcons) {
-        console.log(result.chosenIcons);
         result.chosenIcons.forEach((icon) => {
-            if (icon.name[0] !== "uploadedImage") {
+            if (icon.content == "ICON") {
                 document
-                    .querySelector(`[name="${icon.name}"]`)
+                    .querySelector(`[name="${icon.name[0]}"]`)
                     .querySelector(".what-it-becomes").innerHTML = `<i class="bi bi-${icon.data}" title="${icon.data}"></i>`;
             } else {
                 document
-                    .querySelector(`[name="${icon.name}"]`)
-                    .querySelector(".what-it-becomes").innerHTML = `<img id ="custom-image-preview-2" src="${icon.data}" alt="${icon.data}">`;
+                    .querySelector(`[name="${icon.name[0]}"]`)
+                    .querySelector(".what-it-becomes").innerHTML = `<img id ="custom-image-preview-2" src="${icon.data}" alt="customIMG">`;
             }
         });
     } else {

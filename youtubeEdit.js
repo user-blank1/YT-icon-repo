@@ -30,6 +30,34 @@ const applyPlay = (buttonEl, id, iconClass, title) => {
         buttonEl.appendChild(icon);
     }
 };
+const applyPlayImg = (buttonEl, id, base64data, title) => {
+    if (!buttonEl) return;
+
+    const svgIcon = buttonEl.querySelector("svg");
+    const currentIcon = buttonEl.querySelector("i");
+
+    if (svgIcon) svgIcon.style.visibility = "hidden";
+    if (currentIcon) currentIcon.remove();
+
+    const img = document.createElement("img");
+    img.src = base64data;
+    img.id = id;
+    img.title = title;
+    img.style.cssText = `
+        z-index: 9999;
+        position: absolute;
+        pointer-events: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+    `;
+
+    buttonEl.style.position = "relative";
+    buttonEl.appendChild(img);
+};
+
 const applySkip = (buttonEl, id, iconClass, title) => {
     if (!buttonEl) return;
     const currentIcon = buttonEl.querySelector("i");
@@ -61,6 +89,33 @@ const applySkip = (buttonEl, id, iconClass, title) => {
         buttonEl.style.position = "relative";
         buttonEl.appendChild(icon);
     }
+};
+const applySkipImg = (buttonEl, id, base64data, title) => {
+    if (!buttonEl) return;
+
+    const svgIcon = buttonEl.querySelector("svg");
+    const currentIcon = buttonEl.querySelector("i");
+
+    if (svgIcon) svgIcon.style.visibility = "hidden";
+    if (currentIcon) currentIcon.remove();
+
+    const img = document.createElement("img");
+    img.src = base64data;
+    img.id = id;
+    img.title = title;
+    img.style.cssText = `
+        z-index: 9999;
+        position: absolute;
+        pointer-events: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+    `;
+
+    buttonEl.style.position = "relative";
+    buttonEl.appendChild(img);
 };
 const applyVolume = (buttonEl, id, iconClass, title) => {
     if (!buttonEl) return;
@@ -94,6 +149,35 @@ const applyVolume = (buttonEl, id, iconClass, title) => {
         buttonEl.appendChild(icon);
     }
 };
+const applyVolumeImg = (buttonEl, id, base64data, title) => {
+    if (!buttonEl) return;
+
+    const svgIcon = buttonEl.querySelector("svg");
+    const currentIcon = buttonEl.querySelector("i");
+
+    if (svgIcon) svgIcon.style.visibility = "hidden";
+    if (currentIcon) {
+        currentIcon.remove();
+    }
+    console.log(buttonEl);
+    const img = document.createElement("img");
+    img.src = base64data;
+    img.id = id;
+    img.title = title;
+    img.style.cssText = `
+        z-index: 9999;
+        position: absolute;
+        pointer-events: none;
+        top: 33.3%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+    `;
+
+    buttonEl.style.position = "relative";
+    buttonEl.appendChild(img);
+};
 
 // LISTEN TO CHANGES IN STORAGE
 chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -102,8 +186,9 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
         const play = document.querySelector(".ytp-play-button");
         const skip = document.querySelector(".ytp-next-button");
         const volume = document.querySelector(".ytp-volume-icon");
+
         icons.forEach((icon) => {
-            if (icon.name[0] !== "uploadedImage") {
+            if (icon.content === "ICON") {
                 if (icon.name[0] === "play") {
                     applyPlay(play, "play2", icon.data, icon.data);
                 } else if (icon.name[0] === "skip") {
@@ -111,6 +196,17 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
                 } else if (icon.name[0] === "volume") {
                     const currentVolumeButton = document.querySelector(".ytp-volume-icon");
                     applyVolume(currentVolumeButton, "volume", icon.data, icon.data);
+                }
+            } else if (icon.content === "IMAGE") {
+                if (icon.name[0] === "play") {
+                    applyPlayImg(play, "play2", icon.data, "icon.data");
+                }
+                if (icon.name[0] === "skip") {
+                    applySkipImg(skip, "skip", icon.data, "icon.data");
+                }
+                if (icon.name[0] === "volume") {
+                    const currentVolumeButton = document.querySelector(".ytp-volume-icon");
+                    applyVolumeImg(currentVolumeButton, "volume", icon.data, "icon.data");
                 }
             }
         });
@@ -125,7 +221,7 @@ function applySavedIcons() {
         const skip = document.querySelector(".ytp-next-button");
         const volume = document.querySelector(".ytp-volume-icon");
         icons.forEach((icon) => {
-            if (icon.name[0] !== "uploadedImage") {
+            if (icon.content === "ICON") {
                 if (icon.name[0] === "play") {
                     applyPlay(play, "play2", icon.data, icon.data);
                 }
@@ -135,6 +231,17 @@ function applySavedIcons() {
                 if (icon.name[0] === "volume") {
                     const currentVolumeButton = document.querySelector(".ytp-volume-icon");
                     applyVolume(currentVolumeButton, "volume", icon.data, icon.data);
+                }
+            } else if (icon.content === "IMAGE") {
+                if (icon.name[0] === "play") {
+                    applyPlayImg(play, "play2", icon.data, "icon.data");
+                }
+                if (icon.name[0] === "skip") {
+                    applySkipImg(skip, "skip", icon.data, "icon.data");
+                }
+                if (icon.name[0] === "volume") {
+                    const currentVolumeButton = document.querySelector(".ytp-volume-icon");
+                    applyVolumeImg(currentVolumeButton, "volume", icon.data, "icon.data");
                 }
             }
         });
