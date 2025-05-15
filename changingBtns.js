@@ -1,36 +1,30 @@
 function applyFullscreenIcon(fullscreenBtn, fullscreenIcon) {
-    // Step 1: Remove any existing YouTube-inserted SVGs, or our own previous icons
-    fullscreenBtn.querySelectorAll(" img, i").forEach((el) => el.remove());
-    fullscreenBtn.querySelectorAll("svg").forEach((el) => (el.style.visibility = "hidden"));
-    // Step 2: Inject custom icon
-    if (fullscreenIcon.content === "IMAGE") {
-        const svgIcon = fullscreenBtn.querySelector("svg");
-        if (svgIcon) svgIcon.style.visibility = "hidden";
+    // Remove any existing icons we added
+    fullscreenBtn.querySelectorAll("img, i").forEach((el) => el.remove());
 
+    // Make sure all SVGs are hidden
+    fullscreenBtn.querySelectorAll("svg").forEach((el) => (el.style.visibility = "hidden"));
+
+    // Ensure the button is relatively positioned
+    fullscreenBtn.style.position = "relative";
+
+    if (fullscreenIcon.content === "IMAGE") {
         const img = document.createElement("img");
         img.src = fullscreenIcon.data;
         img.style.cssText = `
-        z-index: 9999;
-        position: absolute;
-        pointer-events: none;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 35px;
-        height: 35px;
-    `;
-        fullscreenBtn.style.position = "relative";
+            z-index: 9999;
+            position: absolute;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 35px;
+        `;
         fullscreenBtn.appendChild(img);
     } else if (fullscreenIcon.content === "ICON") {
-        const svgIcon = fullscreenBtn.querySelector("svg");
-
-        if (svgIcon) svgIcon.style.visibility = "hidden"; // Hide the SVG icon
-
-        // If an icon already exists, update it
-
         const icon = document.createElement("i");
         icon.className = `bi bi-${fullscreenIcon.data}`;
-
         icon.title = "ICON";
         icon.style.cssText = `
             color: white !important;
@@ -43,13 +37,11 @@ function applyFullscreenIcon(fullscreenBtn, fullscreenIcon) {
             transform: translate(-50%, -50%);
             font-size: 18px;
         `;
-
-        fullscreenBtn.style.position = "relative";
         fullscreenBtn.appendChild(icon);
     }
 }
 
-const observer = new MutationObserver(() => {
+let observer = new MutationObserver(() => {
     const fullscreenBtn = document.querySelector(".ytp-fullscreen-button");
     if (!fullscreenBtn) return;
 
@@ -64,15 +56,27 @@ const observer = new MutationObserver(() => {
         const fullscreenIcon = chosenIcons.find((obj) => obj.name.includes("fullscreen"));
         if (!fullscreenIcon) return;
 
+        // Disconnect observer before DOM manipulation
+        observer.disconnect();
+
         applyFullscreenIcon(fullscreenBtn, fullscreenIcon);
+
+        // Reconnect observer after DOM manipulation
+        startObserving();
     });
 });
 
-// Observe YouTube controls
-const controls = document.querySelector(".ytp-right-controls");
-if (controls) {
-    observer.observe(controls, { childList: true, subtree: true });
+// Separate function to start observing
+function startObserving() {
+    const controls = document.querySelector(".ytp-fullscreen-button");
+    if (controls) {
+        observer.observe(controls, { childList: true, subtree: true });
+    }
 }
+
+// Start observing initially
+startObserving();
+
 document.addEventListener("fullscreenchange", () => {
     setTimeout(() => {
         const fullscreenBtn = document.querySelector(".ytp-fullscreen-button");
