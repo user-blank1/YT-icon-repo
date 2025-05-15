@@ -10,7 +10,7 @@
     "content_scripts": [
         {
             "matches": ["https://www.youtube.com/*"],
-            "js": ["youtubeEdit.js", "injectBS.js"]
+            "js": ["youtubeEdit.js", "injectBS.js", "changingBtns.js"]
         }
     ],
     "web_accessible_resources": [
